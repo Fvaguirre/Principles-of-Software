@@ -1,0 +1,6 @@
+1. Reviewing the lecture content before doing homework could help a lot. When I was solving
+   problems, I had to refer to the slides from time to time because I could not remember everything
+   without any practice.
+2. I think during class we could have more examples discussed. Some examples on slides are very
+   simple but lack depth.
+3. More Dafny tutorials would be quite useful, such as arrays and forall statement.

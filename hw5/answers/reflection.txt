@@ -1,0 +1,3 @@
+1. Learning more Java packages.
+2. Connection of knowledge in class and assignments.
+3. Java features.

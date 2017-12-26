@@ -1,0 +1,5 @@
+oversized class: BooleanExp
+switch statements: BooleanExp.toString(), ExpressionParser.print()
+long method: BooleanExp.toString(), ExpressionParser.parse(), ExpressionParser.print()
+temp variables: ExpressionParser.token
+duplicate code: ExpressionParser.evaluate()

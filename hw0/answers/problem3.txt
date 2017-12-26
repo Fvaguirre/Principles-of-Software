@@ -1,0 +1,12 @@
+1. 0 is a non-negative by the definition of FibonacciTest.java but the the branch says any number 
+   no greater than 0 is negative. So there is a conflict between Fibonacci.java and
+   FibonacciTest.java. Simply change "<=" to "<" and it is solved.
+   
+2. The beginning number for Fibonacci Sequence in FibonacciTest.java is 0, which means Fib[0] and
+   Fib[1] is both 1 and Fibo[2] is 2. However, by the definition of Fibonacci.java, the beginning
+   number is 1, which is restrained by the original if-branch: if(n<=0)... else if(n<=2) return 1.
+   Following the fixed Fibonacci.java("<= 0" to "< 0"), we just need to do this again, changing
+   "else if(n<=2)" to "else if(n<2)".
+   
+3. The definition of Fibonacci sequence is to add former 2 numbers, but in Fibonacci.java, the "+"
+   is misprinted as "-". So changing this math symbol will fix the bug.

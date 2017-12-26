@@ -1,0 +1,193 @@
+1.
+First Invariant:
+	method Min(arr:array<int>) returns(i:int,z:int)
+	  requires arr != null && arr.Length > 0
+	  ensures forall k :: 0 <= k < arr.Length ==> arr[k] >= z
+	{
+	  i := 0;
+	  z := arr[0];
+	  while (i < arr.Length)
+	    invariant 0 <= i <= arr.Length && forall k :: 0 <= k < i ==> arr[k] >= z
+	    decreases arr.Length - i
+	  {
+	    if(arr[i] < z)
+	    {
+	      z := arr[i];
+	    }
+	    i := i + 1;
+	  }
+	}
+Second Invariant:
+	method Min(arr:array<int>) returns(i:int,z:int)
+	  requires arr != null && arr.Length > 0
+	  ensures forall k :: 0 <= k < arr.Length ==> arr[k] >= z
+	{
+	  i := 0;
+	  z := arr[0];
+	  while (i < arr.Length)
+	    invariant 0 <= i < arr.Length && forall k :: 0 <= k <= i ==> arr[k] >= z
+	    decreases arr.Length - i
+	  {
+	    if(i + 1 < arr.Length)
+	    {
+	      if(arr[i + 1] < z)
+	      {
+	        z := arr[i + 1];
+	      }
+	    }
+	    else
+	    {
+	      return;
+	    }
+	    i := i + 1;
+	  }
+	}
+Description:
+The first invariant makes the code easier to write, compared to the second invariant. The second
+invariant makes the algorithm more complex because of some boundary problems. The 'k < i' has been
+changed to 'k <= i', so when the k equals i, the arr[k] should still be greater or equal to z, but
+by the 'while' part of the first invariant, only arr[i] had been modified so only when k is smaller
+than i, such statement stands. Therefore, we first change 'arr[i] < z' to 'arr[i + 1] < z'. Here
+comes another problem: the array index could be out of range for that i is smaller than length
+while there is a case when i + 1 equals length. Thus, I added an if-else statement to deal with the
+issue.
+
+2.
+Loop invariant: result * (x ^ y) = m ^ n
+Proof:
+	Base case:
+		result = 1; x = m; y = n;
+		result * (x ^ y) = 1 * (m ^ n) = m ^ n;
+		Correct!
+	Inductive case:
+		Suppose k-th iteration is correct, so: result * (x ^ y) = m ^ n; (Equation 1)
+		(k + 1)-th iteration:
+		if y is even, then for Equation 1, the left part of equation is:
+		  result * [(x * x) ^ (y / 2)] 
+		= result * {x ^ [2 * (y / 2)]}
+		= result * (x ^ y)
+		= m ^ n (right part of equation)
+		if y is odd, then for Equation 1, the left part of equation is:
+		  (result * x) * [x ^ (y - 1)]
+		= result * x ^ (y - 1 + 1)
+		= result * (x ^ y)
+		= m ^ n (right part of equation)
+		Correct!
+	Partial correctness:
+		loop exit condition: y = 0;
+		loop invariant: result * (x ^ y) = m ^ n;
+		When y is 0, then x ^ y = x ^ 0 = 1, so the left part of Equation 1 is result * 1 = result.
+		Thus, the Equation 1 is transformed as: result = m ^ n, which is exactly the postcondition.
+		Correct!
+	So the loop invariant is result * (x ^ y) = m ^ n. End of proof.
+
+Decrementing function: y
+Proof:
+For each step of the loop, y is either changed to y / 2 or y - 1, so y is indeed decreasing every
+step. When the loop ends, the y is decreased to 0, which is the minimum value. Thus, y is the
+decrementing function.
+
+3.
+line 15: 'var p := i;' must be 'var p:= r;'
+Dafny code:
+function Fact(n: nat): nat 
+{ 
+  if n == 0 then 1 else n*Fact(n-1) 
+}
+
+method AdditiveFactorial(t: int) returns (r: int) 
+  requires t >= 0
+  ensures r == Fact(t)
+  {
+    r := 1;
+    var i := 0;
+    while (i < t) 
+      invariant 0 <= i <= t && r == Fact(i)
+    {
+      var p := r;
+      var j := 0;
+      while (j < i) 
+        invariant 0 <= j <= i && r == p * (j + 1)
+      {
+        r := r + p;
+        j := j + 1;
+      }
+      assert r == p * (i + 1);
+      i := i + 1;
+    }
+  }
+
+4.
+Multiplication:
+Algorithm:
+Precondition:
+{p and q are non-empty arrays, r is an array whose length is p.Length + q.Length}
+	i = 0;
+	while(i < p.Length)
+	{
+		j = 0;
+		while(j < q.Length)
+		{
+			r[i + j] = r[i + j] + p[i] * q[j];
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+Postcondition: 
+{for each 0 <= i < r.Length, r[i] = p[i] * q[0] + p[i - 1] * q[1] + ... + p[0] * q[i]}
+Proof:
+Loop invariant: r[i] = p[i] * q[0] + p[i - 1] * q[1] + ... + p[0] * q[i] (0 <= i < r.Length)
+	Base case:
+	When i = 0, r[0] = r[0 + 0] + p[0] * q[0] = p[0] * q[0]
+	Correct!
+	Inductive case:
+	Suppose k-th iteration is correct, then for (k + 1)th iteration, 
+	r[i + 1] = p[i + 1] * q[0] (j = 0)
+			 + p[i] * q[1] (j = 1)
+			 ......
+			 + p[0] * q[i + 1] (j = i + 1);
+	Let i + 1 = a, the equation is: r[a] = p[a] * q[0] + p[a - 1] * q[1] + ... + p[0] * q[a]
+	Correct!
+	Partial correctness:
+	When i = p.Length and j = q.Length, the loop exits. So the range of the r is 0 to i + j,
+	covering every element of r. The invariant is the same as the postcondition.
+	Correct!
+	Decrementing function: p.Length - i
+	For each step of the loop, i is changed to i + 1, so p.Length - i is indeed decreasing every
+	step. When the loop ends, p.Length - i is decreased to 0, which is the minimum value. Thus, 
+	p.Length - i is the decrementing function.
+Horner's Rule:
+Algorithm:
+Precondition:
+{p is an non-empty array, n is the array's length, x is a given number}
+	result = p[n - 1];
+	i = 1;
+    while(i < n)
+    {
+        result = result * x + p[n - 1 - i];
+        i = i + 1;
+    }
+Postcondition:
+{result = p[0] * x ^ 0 + p[1] * x ^ 1 + ... + p[n - 1] * x ^ (n - 1)}
+Proof:
+Loop invariant: result = p[n - 1 - i] * x ^ 0 + p[n - i] * x ^ 1 + ... + p[n - 1] * x ^ i for each
+0 <= i < n
+	Base case:
+	i = 0, result = p[n - 1]
+	Correct!
+	Inductive case:
+	Suppose k-th iteration is correct, so: result = p[n - 1 - k] * x ^ 0 + p[n - k] * x ^ 1 + ...
+	+ p[n - 1] * x ^ k
+	the (k + 1)th iteration: result = result * x + p[n - 1 - (k + 1)] = p[n - 1 - (k + 1)] * x ^ 0
+	+ p[n - (k + 1)] * x ^ 1 + ... + p[n - 1] * x ^ (k + 1)
+	Substitute k + 1 by k, result = p[n - 1 - k] * x ^ 0 + p[n - k] * x ^ 1 + ... + p[n - 1] * x ^
+	k. Thus the left and right part of the equation still equals.
+	Correct!
+	Partial correctness:
+	The loop terminates when i = n - 1, so by substituting i with n - 1, the result = p[0] * x ^ 0
+	+ p[1] * x ^ 1 + ... + p[n - 1] * x ^ (n - 1), which is exactly the postcondition.
+	Correct!
+	Decrementing function: n - i
+	For each step of the loop, i is changed to i + 1, so n - i is indeed decreasing every step.
+	When the loop ends, n - i is decreased to 0, which is the minimum value. Thus, n - i is the 
+	decrementing function.

@@ -1,0 +1,5 @@
+From examples in the hint part, I used "0, 1, 2" case analysis and designed many tests, such as an
+empty graph, graph with one node, graph with reflexive edges, two nodes with two edges... 
+
+I added more tests to the tests I wrote before writing implementation code 
+since I found myself missed some rep invariants, such as the edge with nodes which do not exist.

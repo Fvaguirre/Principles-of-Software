@@ -1,0 +1,18 @@
+1. There is a warning saying "volume = volume" has no effect, so I changed the left side "volume"
+   to "this.volume", which specify the Ball's volume is the input volume. There is another problem
+   with getVolume() because it simply returned 0. After changing "return 0" to "return volume", all
+   problems are fixed.
+
+2. The approach 2 of keeping a total volume is better. If we use approach 1, every time when we
+   calculate the total volume, we have to traverse all balls, which multiplies the complexity by
+   O(n). However, in approach 2, we do not have to do so, meaning complexity multiplied by O(1).
+   
+3. First, we could build a list for all balls and sort them like what we have done in
+   BallContainer.java.
+   Second, we could use a 2-dimensional array (e.g. ball[10][10]) to keep a record of all balls'
+   volume and numbers, then just do a simple array-sort.
+   Third, though it is not very convenient, set could be converted to map. Use TreeMap with a
+   comparator and it is done.
+   
+   I suppose that the first approach is the best, because there are many preparations to do with
+   the other 2: for array/map, we need to output all the balls to construct an array/map.

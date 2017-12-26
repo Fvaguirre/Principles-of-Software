@@ -1,0 +1,11 @@
+1. The end of constructors: Constructors build new RatPolys, so they need to be checked after
+   building one. Methods might turn RatPolys to zero, which needs them to be '0' polynomials, not
+   arrays with 0 as the elements, so they need to be checked after computing. However, they always
+   return a constructor, so they actually do not need it.
+
+2. RatPoly: if c is zero, also create an array with length: e + 1, and all elements are 0; less
+            complex, because the if-branch is deleted.
+   degree: degree is the array's length minus 1; less complex, because we can directly get the
+           degree rather than traverse the array to find the biggest index of non-zero.
+   add/sub/mul/diff/antiDiff: combine the ZERO branch with the non-NaN branch; less complex,
+                              because the judging ZERO process is deleted.

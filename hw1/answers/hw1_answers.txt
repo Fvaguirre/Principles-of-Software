@@ -1,0 +1,114 @@
+Problem 1:
+1. { -1 ≤ x ≤ 1 }
+2. { x > 0 ∨ y > 0 }
+3. { |x| > w }
+4. { |x| > |w| }
+5. { x is real }
+
+Problem 2:
+1. valid;
+2. invalid; Either change the precondition to z <= x or change the postcondition to y > 0 (or y >=
+   0, etc.)
+
+Problem 3:
+1. { x = 10 & z = 5 }
+   { y = -10 & x = 10 & z = 5 }
+   { y = -10 & x = 10 & z = -5 }
+   { y = -10 & x = 0 & z = -5 }
+2. { x > z } // Is there a printing error? Maybe it should be y = x - z
+   { x > z }
+3. { z > -8 & z < 8 }
+   { z > -4 & z < 4 }
+   { z > 0 & z < 8 }
+4. { y is odd } //Let x = 2 * k + 1 ( k is a integer ), y = 4 * k * k + 4 * k + 1
+   { w = 1 & x and y are odd }
+
+Problem 4:
+1. { x <= 9 & z <= 0 }
+   { x <= 9 & z <= 3 }
+2. { x <= 2 }
+   { z + x <= 0 }
+3. { z > w + 4 }
+   { 2 * z > x }
+
+Problem 5:
+1. 
+Dafny Code:
+method computation(x: int) returns(y: int)
+  requires x != 0
+  ensures y != 0
+{
+  if (x <= 0)
+  {
+    y := x * x;
+  }
+  else
+  {
+    y := x + 1;
+  }
+}
+Reasoning:
+{ x != 0 }
+{ x <= 0 & x != 0 }
+{ x <= 0 & x != 0 }
+{ x > 0 & x != -1 }
+{ x > 0 & x != 0 }
+
+Problem 6:
+1. { y > 0 }
+   { w > 0 }
+   Correct
+2. { x >= 2 * w }
+   { x + 2 >= z }
+   { x >= z }
+   Correct
+3. { x = y & x and y are positive }
+   { x = -1 & y > 0 }
+   { y > 0 & x != y }
+   { x = y - 1 }
+   Correct
+
+Problem 7:
+1.
+loop invariant:
+p == (x - i) * y
+decrementing function:
+i
+Dafny code: 
+method Loop(x:int) returns(i:int,p:int,y:int)
+  requires x >= 0
+  ensures p == x * y
+{
+  i := x;
+  p := 0;
+  while (i != 0)
+    invariant p == (x - i) * y
+    decreases i
+  {
+    p := p + y;
+    i := i - 1;
+  }
+}
+2.
+loop invariant:
+0 <= i <= arr.Length && forall k :: 0 <= k < i ==> arr[k] >= z
+decrementing function:
+arr.Length - k
+Dafny code:
+method Min(arr:array<int>) returns(i:int,z:int)
+  requires arr != null && arr.Length > 0
+  ensures forall k :: 0 <= k < arr.Length ==> arr[k] >= z
+{
+  i := 0;
+  z := arr[0];
+  while (i < arr.Length)
+    invariant 0 <= i <= arr.Length && forall k :: 0 <= k < i ==> arr[k] >= z
+    decreases arr.Length - i
+  {
+    if(arr[i] < z)
+    {
+      z := arr[i];
+    }
+    i := i + 1;
+  }
+}

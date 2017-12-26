@@ -1,0 +1,29 @@
+1. When constructing the parameter 'this', it would be defined as NaN, ZERO or RatNum, and there is
+   no method to change 'this' to null(Otherwise there would be a RuntimeException). Thus we do not 
+   need to require this != null.
+
+2. If a number is operated with a NaN, the result would also be NaN. NaN here means numer is 1 and 
+   denom is zero. When 'this' is divided by NaN, the function will return RatNum(0, this.denom),   
+   which is zero, not NaN; For 'add' and 'mul', if operated with NaN, will return (this.numer, 0), 
+   which follows the class definition.
+
+3. RatNum: delete 'int g = gcd(n,d); n = n / g; d = d / g;', less complex, code would be simpler
+           and efficiency would be higher;
+   checkRep: delete the 'if (denom > 0)' part, less complex, code would be simpler and efficiency
+             would be higher;
+   equals: change 'return this.numer == rn.numer && this.denom == rn.denom' to 'return this.numer *
+           rn.denom == rn.numer * this.denom', more complex, code needs more clarifying and
+           efficiency would be lower;
+   toString: add 'n = n / gcd(n, d), d = d / gcd(n, d)', more complex, code needs more clarifying
+             and efficiency would be lower.
+
+4. For each function, the result might not be in the reduced form (gcd(numerExpr, denomExpr) maybe
+   not equal to 1), so 'this' is not a RatNum, by the class definition. However, the function
+   specification requires the result to be a RatNum.
+   RatNum class specification requires the object to be immutable, but the changes mutate 'this',
+   thus the object becomes mutable. This is a Representation Exposure, which might break the rep
+   invariant.
+
+5. None of the methods would change the denom to be a negative number and the numer still satisfies
+   the rep invariant. The representation exposure is avoided by returning to a new object, which is
+   still a RatNum. So it is unnecessary to check before.

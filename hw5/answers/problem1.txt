@@ -1,0 +1,30 @@
+1.
+function subtypes: X m(X y, String s);
+        		   Y m(Object y, Object s);
+X m(X xobject, String s): override
+Y m(Object y, Object s): overload
+Object m(X y, String s): neither
+Z m(Y y, String s): overload
+
+2.1
+True subtype: 
+Isosceles has the same function in triangle. The effect of the constructor in isosceles is stronger
+than the regular triangle because it ensures two sides are also equal so it has a stronger spec.
+It can replace regular triangle anywhere.
+
+2.2
+Not true subtype(Squid):
+If it was substituted for a vertebrate object, it could work incorrectly since it does not have a
+stronger spec than vertebrate. 
+True subtype(Human):
+It has a stronger spec.
+
+2.3
+Not true subtype:
+Anywhere the bike class constructor is called is not replaceable with the mountain bike class
+constructor because that constructor expects one more argument.
+
+2.4
+Not true subtype:
+A concurrent account can be used to replace a regular account and it could throw an exception when
+the user does not expect it. Concurrent cannot replace account everywhere

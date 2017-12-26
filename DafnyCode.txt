@@ -1,0 +1,13 @@
+method computation(x: int) returns(y: int)
+  requires x <= -3 || (x >= 3 && x < 5) || x>=8
+  ensures y >= 9
+{
+  if (x < 5)
+  {
+    y := x * x;
+  }
+  else
+  {
+    y := x + 1;
+  }
+}

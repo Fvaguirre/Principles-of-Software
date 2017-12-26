@@ -1,0 +1,3 @@
+I have changed the data structure from adjacent matrix to adjacent list by using HashMap instead of
+simple matrixes. If I use my adjacent matrix, since there would be thousands of nodes and edges,
+the space consumption would become around millions of bytes, which is impossible to perform.

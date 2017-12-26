@@ -1,0 +1,5 @@
+1. Quickly draw up a sketch for the ADT.
+
+2. More help on Java.
+
+3. Basic Java skills.

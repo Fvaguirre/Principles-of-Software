@@ -1,0 +1,12 @@
+Advantages:
+1. collection of edges: O(1) time complexity when adding a new edge.
+2. an adjacency list: O(1) time complexity when adding a new node or edge.
+3. an adjacency matrix: O(1) time complexity when adding an edge or querying if the edge exists.
+
+My representation is similar to an adjacency matrix: nodes are stored in name array and edges are
+stored in an adjacency matrix which is 3-dimensional. Aij means an edge from node i to node j, and
+the third dimension is the index of edges with the same starting and ending point. A blank means
+the name is empty, and "infinity" means there are no edge between nodes.
+
+I choose this representation because it is easy to understand and implement. My code is very simple
+so I just need to take care of adding edges, so the matrix best fits my need.

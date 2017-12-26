@@ -1,0 +1,48 @@
+/**
+ * Graph represents a mutable graph with nodes and edges which could be added.
+ * 
+ * Rep Invariant: non-empty graphs have 1-5 nodes and each other nodes have 0-5 edges.
+ * 
+ * Abstraction Function: nodes are stored in name array and edges are stored in an adjacency
+ * matrix which is 3-dimensional. Aij means an edge from node i to node j, and the third dimension
+ * is the index of edges with the same starting and ending point. A blank means the name is empty,
+ * and "infinity" means there are no edge between nodes.
+ */
+public class Graph
+{
+	/**
+	 * constructs a blank graph
+	 * 
+	 * @effects creates a blank graph
+	 */
+	public Graph()
+	{
+		throw new RuntimeException("Not yet implemented");
+	}
+	/**
+	 * adds one node to the graph
+	 * 
+	 * @param nodeData the node to be added to graph
+	 * @effects add one node to the graph, does nothing if the node is already in the graph or the
+	 *          name array is full
+	 * @modifies name
+	 * @throws exception if nodeData is null or same as a prior name
+	 */
+	public void addNode(String nodeData)
+	{
+		throw new RuntimeException("Not yet implemented");
+	}
+	/**
+	 * adds one edge to the graph
+	 * 
+	 * @param parentNode the starting node
+	 * @param childNode the ending node
+	 * @param edgeLabel the label of the edge
+	 * @effects adds one edge to the graph
+	 * @modifies graph
+	 * @throws exception if one parameter is null or the Matrix array is full
+	 */
+	public void addEdge(String parentNode, String childNode, String edgeLabel)
+	{
+		throw new RuntimeException("Not yet implemented");
+	}

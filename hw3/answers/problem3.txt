@@ -1,0 +1,40 @@
+Pseudocode:
+polynomialDivision(n, d)
+{Precondition: n.degree >= d.degree > 0; n, d, q, r are non-empty arrays}
+{
+	q = 0;
+	r = n;
+	while(r.degree >= d.degree && !(r.equals(ZERO)))
+	{
+		t = r[r.degree - 1] / d[d.degree - 1];
+		q = q + t;
+		r = r - t * d;
+	}
+	return q, r;
+}
+{Postcondition: n = d * q + r}
+Loop invariant: n = d * q + r
+Proof:
+	Base case:
+		q = 0, so n = d * q + r = d * 0 + r = n;
+		Correct!
+	Inductive case:
+		Suppose k-th iteration is correct, so n = d * q0 + r0;
+		(k + 1)-th iteration:
+		q1 = q0 + t1, r1 = r0 - t1 * d;
+		d * q1 + r1 = d * (q0 + t1)+ r0 - t1 * d
+		            = d * q0 + r0 + d * t1 - t1 * d
+		            = d * q0 + r0
+		            = n
+		Correct!
+	Partial correctness:
+		loop exit condition: r.degree < d.degree || r.equals(ZERO)
+		loop invariant is exactly the postcondition and the exit condition does not violate the
+		loop invariant.
+		Correct!
+Decrementing function: r.degree - d.degree
+Proof:
+For each step of the loop, r.degree is changed to (r - t * d).degree while d.degree remains the
+same so r.degree - d.degree is indeed decreasing every step. When the loop ends, the r.degree -
+d.degree is decreased to -1, which is the minimum value. Thus, r.degree - d.degree is the
+decrementing function.

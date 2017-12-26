@@ -1,0 +1,5 @@
+1. Writing down some sketch rather than just thinking would help.
+
+2. I hope that there are more reference examples and articles.
+
+3. Specific definitions on the proof procedure.

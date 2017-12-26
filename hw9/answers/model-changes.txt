@@ -1,0 +1,12 @@
+Add getBuildings() and FindPath() which return iterable parameters for GUI design.
+
+The hw7.CampusMapGraph still has bugs when finding the path.
+Some examples which works fine:
+
+Multiple Nodes:
+VCC-Greene
+Ricketts-Quad
+
+Two Nodes:
+Union-Public Safety
+Ricketts-87 Gym
